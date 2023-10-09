@@ -1,6 +1,6 @@
 pipeline{
     agent {
-         label 'master'
+         label 'principal'
     }
     /*
     tools {
@@ -27,12 +27,12 @@ pipeline{
     stages{
         stage('Checkout'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'Github', url: 'git@github.com:calamza/holamundo.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/principal']], extensions: [], userRemoteConfigs: [[credentialsId: 'Github', url: 'git@github.com:calamza/holamundo.git']]])
             }
         }
         stage('Build artifact'){
             agent {
-                label 'master'
+                label 'principal'
             }
             steps{
                 sh '''
@@ -43,7 +43,7 @@ pipeline{
         }
         stage('Upload to nexus'){
             agent {
-                label 'master'
+                label 'principal'
             }
             steps{
                 script{
@@ -90,7 +90,7 @@ pipeline{
         
         stage("Post") {
             agent {
-                label 'master'
+                label 'principal'
             }
             steps {
                 sh '''
